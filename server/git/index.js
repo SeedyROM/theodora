@@ -22,7 +22,7 @@ const cloneRepository = (url, location) => {
 
         clone(url, repositoryPath, {}, function(err) {
             if(err) rej(err)
-            else res()
+            else res(true)
         })
     })
 }
