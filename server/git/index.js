@@ -12,12 +12,12 @@ const parseRepositoryName = (url) => {
     }
 }
 
-const cloneRepository = (url) => {
+const cloneRepository = (url, location) => {
     return new Promise((res, rej) => {
-        const repositoryPath = path.join(process.cwd(), 'repos')
+        const repositoryPath = location || path.join(process.cwd(), 'repos')
         
         if(fs.existsSync(path.join(repositoryPath, parseRepositoryName(url)))) {
-            rej(new Error('Git repository already exists!'))
+            rej(new Error(`Git repository already exists at "${repositoryPath}"`))
         } 
 
         clone(url, repositoryPath, {}, function(err) {
@@ -27,8 +27,4 @@ const cloneRepository = (url) => {
     })
 }
 
-cloneRepository('https://github.com/SeedyROM/test_document')
-.then(() => {
-    console.log('Reposuccessfully cloned!')
-})
-.catch(console.log)
+module.exports = cloneRepository
