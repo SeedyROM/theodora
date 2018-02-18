@@ -4,6 +4,9 @@ const http = require('chai-http')
 const expect = chai.expect
 const assert = chai.assert
 
+// Set the environment to test
+process.env.NODE_ENV = 'test'
+
 // Setup chai to use the chai-http library
 chai.use(http)
 

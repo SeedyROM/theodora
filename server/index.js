@@ -9,13 +9,24 @@ const logger = winston.createLogger({
     level: 'info',
     format: winston.format.json(),
     transports: [
-        new winston.transports.File({ filename: 'error.log', level: 'error' }),
-        new winston.transports.File({ filename: 'combined.log' })
+        new winston.transports.File({ filename: '.error.log', level: 'error' }),
+        new winston.transports.File({ filename: '.combined.log' })
     ]
 })
+if (process.env.NODE_ENV !== 'production') {
+    logger.add(
+        new winston.transports.Console({
+            format: winston.format.simple()
+        })
+    );
+}
+
 const app = express() // Create an express server
 
-app.use(morgan('combined')) // Setup the morgan middleware
+// We only need this for debug and production.
+if (process.env.NODE_ENV !== 'test') {
+    app.use(morgan('combined')) // Setup the morgan middleware
+}
 app.use(bodyParser.json()); // For parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // For parsing application/x-www-form-urlencoded
 
@@ -28,12 +39,8 @@ const PORT = 3000 // Port constant, will come from a configuration file.
 // Start our express server and pass a callback 
 // that runs when the server is online.
 app.listen(PORT, () => {
-    logger.info('================================')
-    logger.info(chalk.green(`Listening on port ${PORT}...`))
-    logger.info('================================')    
+    logger.info(chalk.green(`Listening on port ${PORT}...`)) 
 })
 
-module.exports = {
-    app,
-    logger
-}
+app.logger = logger
+module.exports = app
