@@ -19,3 +19,5 @@ const PORT = 3000 // Port constant, will come from a configuration file.
 app.listen(PORT, () => {
     console.log(chalk.green(`Listening on port ${PORT}...`))
 })
+
+module.exports = app
