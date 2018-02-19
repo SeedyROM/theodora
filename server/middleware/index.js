@@ -1,3 +1,4 @@
+/* istanbul ignore next */
 module.exports = (app) => {
     // This is a bare bones middleware.
     app.use((req, res, next) => {

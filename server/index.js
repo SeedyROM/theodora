@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 const express = require('express') // Import express
 const morgan = require('morgan') // Use morgan to log express events
 const chalk = require('chalk') // Chalk for console output
@@ -13,12 +14,12 @@ const logger = winston.createLogger({
         new winston.transports.File({ filename: '.combined.log' })
     ]
 })
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV == 'development') {
     logger.add(
         new winston.transports.Console({
             format: winston.format.simple()
         })
-    );
+    )
 }
 
 const app = express() // Create an express server

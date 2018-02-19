@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha './**/test_*.js'",
+    "test": "nyc mocha './**/test_*.js' --exit",
     "dev": "nodemon --watch server/**/*.js --exec 'node server/index.js'"
   },
   "keywords": [],
@@ -27,6 +27,12 @@
     "chai-http": "^3.0.0",
     "mocha": "^5.0.1",
     "nodemon": "^1.15.0",
+    "nyc": "^11.4.1",
     "tmp": "0.0.33"
+  },
+  "nyc": {
+    "exclude": [
+      "tests/**/*.js"
+    ]
   }
 }

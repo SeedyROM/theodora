@@ -16,4 +16,13 @@ describe('cloning git repositories', function() {
         const result = await clone('https://github.com/SeedyROM/test_document', this.dir.name)
         expect(result).to.equal(true)
     })
+
+    it('should not be able to overwrite an existing repo', async function() {
+        const result = await clone('https://github.com/SeedyROM/test_document', this.dir.name)
+        expect(result).to.equal(true)
+
+        // Try again
+        const fail = clone.apply(null, ['https://github.com/SeedyROM/test_document', this.dir.name])
+        expect(fail).to.throw(Error)
+    })
 })
