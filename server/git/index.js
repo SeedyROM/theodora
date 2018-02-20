@@ -9,11 +9,14 @@ const parseRepositoryName = (url) => {
     const httpPattern = /http[s?]:\/\/(.*)/
     if(url.match(httpPattern)) {
         return path.basename(url)
+    } else {
+        throw new Error('Could not parse repository name)')
     }
 }
 
 const cloneRepository = (url, location) => {
     return new Promise((res, rej) => {
+        /* istanbul ignore next */
         const repositoryPath = location || path.join(process.cwd(), 'repos')
         
         if(fs.existsSync(path.join(repositoryPath, parseRepositoryName(url)))) {
@@ -27,4 +30,4 @@ const cloneRepository = (url, location) => {
     })
 }
 
-module.exports = cloneRepository
+module.exports = { cloneRepository, parseRepositoryName }

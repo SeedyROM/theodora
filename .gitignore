@@ -3,3 +3,4 @@ repos/**/*
 !repos/.gitkeep
 *.log
 .nyc_output
+coverage
