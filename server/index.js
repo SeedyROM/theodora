@@ -23,13 +23,14 @@ const logger = winston.createLogger({
         new winston.transports.File({ filename: '.combined.log' })
     ]
 })
-// if (process.env.NODE_ENV == 'development') {
+
+if (process.env.NODE_ENV == 'development') {
     logger.add(
         new winston.transports.Console({
             format: winston.format.simple()
         })
     )
-// }
+}
 
 const app = express() // Create an express server
 

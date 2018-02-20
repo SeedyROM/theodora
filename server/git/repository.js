@@ -16,7 +16,7 @@ class Repository {
         try {
             await cloneRepository(this.url)
         } catch(error) {
-            git(this.path).pull('origin', 'master', {'--rebase': 'true'})
+            git(this.path).pull('origin', 'master', {'--rebase': 'false'})
         } finally {
             this.tree = directoryTree(this.path)
         }

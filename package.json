@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "nyc --reporter=lcov --reporter=text mocha './**/test_*.js' --exit",
-    "dev": "nodemon --watch server --exec 'node server/index.js'",
+    "dev": "nodemon --watch server --exec 'NODE_ENV=development node server/index.js'",
     "coveralls": "nyc npm test && nyc report --reporter=text-lcov | coveralls"
   },
   "keywords": [],
@@ -29,7 +29,7 @@
   "devDependencies": {
     "chai": "^4.1.2",
     "chai-as-promised": "^7.1.1",
-    "chai-http": "^3.0.0",
+    "chai-http": "git+https://github.com/chaijs/chai-http.git",
     "coveralls": "^3.0.0",
     "mocha": "^5.0.1",
     "mocha-lcov-reporter": "^1.3.0",
