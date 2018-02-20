@@ -1,4 +1,13 @@
 /* istanbul ignore file */
+
+// Istanbul config
+const im = require('istanbul-middleware')
+const isCoverageEnabled = (process.env.COVERAGE == "true") // or a mechanism of your choice
+
+if (isCoverageEnabled) {
+    im.hookLoader(__dirname)
+}
+
 const express = require('express') // Import express
 const morgan = require('morgan') // Use morgan to log express events
 const chalk = require('chalk') // Chalk for console output
@@ -14,13 +23,13 @@ const logger = winston.createLogger({
         new winston.transports.File({ filename: '.combined.log' })
     ]
 })
-if (process.env.NODE_ENV == 'development') {
+// if (process.env.NODE_ENV == 'development') {
     logger.add(
         new winston.transports.Console({
             format: winston.format.simple()
         })
     )
-}
+// }
 
 const app = express() // Create an express server
 
@@ -43,5 +52,6 @@ app.listen(PORT, () => {
     logger.info(chalk.green(`Listening on port ${PORT}...`)) 
 })
 
+app.repo = {}
 app.logger = logger
 module.exports = app

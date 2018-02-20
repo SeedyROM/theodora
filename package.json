@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "nyc --reporter=lcov --reporter=text mocha './**/test_*.js' --exit",
-    "dev": "nodemon --watch server/**/*.js --exec 'node server/index.js'",
+    "dev": "nodemon --watch server --exec 'node server/index.js'",
     "coveralls": "nyc npm test && nyc report --reporter=text-lcov | coveralls"
   },
   "keywords": [],
@@ -14,14 +14,17 @@
   "dependencies": {
     "body-parser": "^1.18.2",
     "chalk": "^2.3.1",
+    "directory-tree": "^2.0.0",
     "express": "^4.16.2",
+    "express-async-handler": "^1.0.3",
+    "git-clone": "github:SeedyROM/git-clone",
     "git-js": "^1.1.1",
+    "istanbul-middleware": "^0.2.2",
     "mongoid": "0.0.1",
     "morgan": "^1.9.0",
     "rimraf": "^2.6.2",
     "simple-git": "^1.89.0",
-    "winston": "^3.0.0-rc1",
-    "git-clone": "github:SeedyROM/git-clone"
+    "winston": "^3.0.0-rc1"
   },
   "devDependencies": {
     "chai": "^4.1.2",
