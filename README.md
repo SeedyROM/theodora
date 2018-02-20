@@ -1,7 +1,7 @@
 # Theodora 📖
-
-
-# todo
+[![Build Status](https://travis-ci.org/SeedyROM/theodora.svg?branch=master)](https://travis-ci.org/SeedyROM/theodora)
+[![Coverage Status](https://coveralls.io/repos/github/SeedyROM/theodora/badge.svg?branch=master)](https://coveralls.io/github/SeedyROM/theodora?branch=master)
+## TODO
 - angular front-end
   - table of contents
     - pull all headings
@@ -38,7 +38,7 @@
     - creating a virtual server (digital ocean + ubuntu)
     - installing and configuring theodora
 
-# maybe
+## Possible
 - css/theme editor
 - user and login system
   - admin and editor roles
