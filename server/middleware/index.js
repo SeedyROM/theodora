@@ -79,11 +79,7 @@ module.exports = (app) => {
                             page: await readFile(fullPath, 'utf8')
                         })
                     default:
-                        const data = await readFile(fullPath)
-                        return res.json({
-                            type: ext,
-                            data: data.toString('base64')
-                        })
+                        return res.sendFile(fullPath)
                 }
                 
             }

@@ -22,10 +22,10 @@ describe('markdown middleware routing', async () => {
         expect(resp.body.type).to.equal('tree')  
         expect(resp.body).to.haveOwnProperty('tree')
     })
-    it('should return a json object containing base64 encoded data when filetype is not .md', async () => {
+    it('should return the actual file', async () => {
         const resp = await chai.request(app).get('/api/test.jpg')
-        expect(resp.body.type).to.equal('.jpg')  
-        expect(resp.body).to.haveOwnProperty('data')
+        expect(resp).to.have.status(200)
+        expect(resp).to.have.header('content-type', 'image/jpeg')
     })
     it('should 404 when unaccepted filetype is specified', async () => {
         const resp = await chai.request(app).get('/api/fake/.git/HEAD')
