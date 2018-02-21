@@ -20,10 +20,22 @@ module.exports = (app) => {
     const repo = new Repository('https://github.com/SeedyROM/test_document')
     repo.clone()
     
-    // Middle ware the intercept calls to valid markdown paths.
+    // Middleware the intercept calls to valid markdown paths.
     app.use(asyncHandler(async (req, res, next) => {
         // Full local repo path.
-        const fullPath = path.join(repo.path, url.parse(req.url).pathname)
+        const relativeUrl = req.url.replace('/api/', '/')
+        const fullPath = path.join(repo.path, url.parse(relativeUrl).pathname)
+        
+        if(req.url.indexOf('/api/') !== 0) {
+            next()
+        }
+        
+        if(req.url.indexOf('/api/structure') === 0) {
+            res.json({
+                tree: repo.tree
+            })
+        }
+
         try {
             // Get file statistics
             const stats = await fileStatistics(fullPath)
@@ -33,7 +45,7 @@ module.exports = (app) => {
             } else {
                 // Return some json about the current URL.
                 res.json({
-                    structure: repo.tree,
+                    type: 'markdown',
                     page: fs.readFileSync(fullPath, 'utf8')
                 })
             }
@@ -41,10 +53,12 @@ module.exports = (app) => {
             // 404
             /* istanbul ignore else  */
             if(error.message.includes('ENOENT')) {
-                res.status(404).json({'error': '404'})
+                res.status(404).send(`Cannot ${req.method} ${req.url}`)
             } else {
                 next(error)
             }
         }
+
+        next()
     }))
 }
