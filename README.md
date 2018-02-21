@@ -13,7 +13,7 @@
   - buttons to show/hide table of contents and file list, like Typora or Write Monkey 3
   - history, location in the folder structure (although your location is already in the url)
   - better looking scrollbar: https://codepen.io/akinjide/pen/BpggrZ
-- serve any non-markdown files statically (images, pdfs, etc)
+- ~~serve any non-markdown files statically (images, pdfs, etc)~~
 - git integration
   - able to do a sparse checkout
   - run periodically, set up cron in ubuntu
