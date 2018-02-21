@@ -4,6 +4,8 @@ const { parseRepositoryName, cloneRepository } = require('../git')
 const git = require('simple-git')
 
 const REPOSITORY_PATH = path.join(process.cwd(), 'repos')
+const EXCLUDE_PATTERN = /\.git|node_modules|env/
+const ACCEPTED_FILETYPES = ['.md', '.png', '.jpeg', '.jpg']
 
 class Repository {
     constructor(url) {
@@ -18,9 +20,14 @@ class Repository {
         } catch(error) {
             git(this.path).pull('origin', 'master', {'--rebase': 'false'})
         } finally {
-            this.tree = directoryTree(this.path)
+            this.tree = directoryTree(this.path, {exclude: EXCLUDE_PATTERN})
         }
     }
 }
 
-module.exports = Repository
+module.exports = {
+    Repository,
+    REPOSITORY_PATH,
+    EXCLUDE_PATTERN,
+    ACCEPTED_FILETYPES
+}

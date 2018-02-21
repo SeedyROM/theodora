@@ -3,14 +3,24 @@ const fs = require('fs')
 const path = require('path')
 const asyncHandler = require('express-async-handler')
 const directoryTree = require('directory-tree')
-const Repository = require('../git/repository')
+const { Repository, EXCLUDE_PATTERN, ACCEPTED_FILETYPES } = require('../git/repository')
 
-// Promise wrapped fs.lstat of this function.
+// Promise wrapped fs.lstat.
 const fileStatistics = (path) => {
     return new Promise((res, rej) => {
         fs.lstat(path, (err, stats) => {
             if(err) rej(new Error(err))
             else res(stats)
+        })
+    })
+}
+// Promise wrapped fs.readFile.
+/* istanbul ignore next */
+const readFile = (...args) => {
+    return new Promise((res, rej) => {
+        fs.readFile(...args, (err, data) => {
+            if(err) rej(new Error(err))
+            else res(data)
         })
     })
 }
@@ -31,7 +41,7 @@ module.exports = (app) => {
         }
         
         if(req.url.indexOf('/api/structure') === 0) {
-            res.json({
+            return res.json({
                 tree: repo.tree
             })
         }
@@ -40,14 +50,42 @@ module.exports = (app) => {
             // Get file statistics
             const stats = await fileStatistics(fullPath)
             if(stats.isDirectory()) {
-                // For now do nothing if a directory is found.
-                next()
+                const indexPath = path.join(fullPath, 'index.md')
+                if(fs.existsSync(indexPath)) {
+                    return res.json({
+                        type: "index",
+                        page: await readFile(indexPath, 'utf8')
+                    })
+                } else {
+                    return res.json({
+                        type: "tree",
+                        tree: directoryTree(fullPath, {excludes: EXCLUDE_PATTERN}) 
+                    })
+                }
+
             } else {
                 // Return some json about the current URL.
-                res.json({
-                    type: 'markdown',
-                    page: fs.readFileSync(fullPath, 'utf8')
-                })
+                const ext = path.extname(fullPath)
+                
+                /* istanbul ignore if */
+                if(!ACCEPTED_FILETYPES.includes(ext)) {
+                    throw new Error('ENOENT Unaccepted filetype')
+                }
+
+                switch(ext) {
+                    case '.md':
+                        return res.json({
+                            type: ext,
+                            page: await readFile(fullPath, 'utf8')
+                        })
+                    default:
+                        const data = await readFile(fullPath)
+                        return res.json({
+                            type: ext,
+                            data: data.toString('base64')
+                        })
+                }
+                
             }
         } catch(error) {
             // 404
