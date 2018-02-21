@@ -87,12 +87,11 @@ module.exports = (app) => {
             // 404
             /* istanbul ignore else  */
             if(error.message.includes('ENOENT')) {
-                res.status(404).send(`Cannot ${req.method} ${req.url}`)
+                next()
             } else {
                 next(error)
             }
         }
 
-        next()
     }))
 }

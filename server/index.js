@@ -45,6 +45,11 @@ app.use(bodyParser.urlencoded({ extended: true })); // For parsing application/x
 require('./middleware')(app)
 require('./routes')(app)
 
+// 404
+app.use((req, res, next) => {
+    res.status(404).json({error: '404 not found'})
+})
+
 const PORT = 3000 // Port constant, will come from a configuration file.
 
 // Start our express server and pass a callback 
