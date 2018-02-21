@@ -86,11 +86,7 @@ module.exports = (app) => {
         } catch(error) {
             // 404
             /* istanbul ignore else  */
-            if(error.message.includes('ENOENT')) {
-                next()
-            } else {
-                next(error)
-            }
+            next(error)
         }
 
     }))
