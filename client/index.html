@@ -1,0 +1,124 @@
+
+
+<html>
+    <head>
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js"></script>
+        <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+        <style>
+            html, body {
+                margin:0;
+                padding:0;
+                color:white;
+                background-color:black;
+                box-sizing:border-box;
+            }
+            *, *:before, *:after {
+                box-sizing: inherit;
+            }
+            #left_button_div {
+                display:flex;
+                flex-direction:column;
+                position:absolute;
+                left:100%;
+            }
+            a {
+                color:white;
+                background-color:black;
+                padding:2px;
+                width:40px;
+                height:40px;
+            }
+            a svg {
+                width:40px;
+            }
+            aside {
+                min-width:200px;
+                position:absolute;
+                left:0;
+                transform:translateX(-100%);
+            }
+            
+
+            .slideout {
+                transition: 0.5s;
+                transform:translateX(0);/* !important;*/
+            }
+            .slideback {
+                transition:0.5s;
+                transform:translateX(-100%);
+            }
+            
+        </style>
+    </head>
+    <body>
+        <div id="app">
+            <article>
+            </article>
+            <aside v-bind:class="{slideout : (active_pane != null), slideback: (active_pane == null)}">
+                <div id="left_button_div">
+                    <div>
+                        <a v-show="active_pane != 'toc'"
+                           v-on:click="active_pane = 'toc'">
+                            <i class="fas fa-bars"></i>
+                        </a>
+                        <a v-show="active_pane == 'toc'"
+                           v-on:click="active_pane = null">
+                            <i class="fas fa-times"></i>
+                        </a>
+                    </div>
+                    <div>
+                        <a v-show="active_pane != 'file'"
+                           v-on:click="active_pane = 'file'">
+                            <i class="fas fa-file"></i>
+                        </a>
+                        <a v-show="active_pane == 'file'"
+                           v-on:click="active_pane = null">
+                            <i class="fas fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+                <div v-show="active_pane == 'toc'">
+                    <p>blah b</p>
+                </div>
+                <div v-show="active_pane == 'file'">
+                    <p>blahb</p>
+                </div>
+            </aside>
+        </div>
+        <script>
+            var app = new Vue({
+                el: '#app',
+                data: {
+                    active_pane: null
+                }
+                // methods: {
+                //     toc_open: function() {
+                //         this.active_pane = 'toc';
+                //     },
+                //     toc_close: function() {
+                //         this.active_pane = null;
+                //     },
+                //     file_open: function() {
+                //         this.active_pane = 'file';
+                //     },
+                //     file_close: function() {
+                //         this.active_pane = null;
+                //     }
+                //    
+                // }
+            });
+        </script>
+    </body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
