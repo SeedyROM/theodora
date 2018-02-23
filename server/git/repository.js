@@ -5,7 +5,7 @@ const git = require('simple-git')
 
 const REPOSITORY_PATH = path.join(process.cwd(), 'repos')
 const EXCLUDE_PATTERN = /\.git|node_modules|env/
-const ACCEPTED_FILETYPES = ['.md', '.png', '.jpeg', '.jpg']
+const ACCEPTED_FILETYPES = /\.md|\.png|\.jpeg|\.jpg/
 
 class Repository {
     constructor(url) {
