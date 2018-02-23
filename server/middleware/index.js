@@ -68,7 +68,7 @@ module.exports = (app) => {
                 const ext = path.extname(fullPath)
                 
                 /* istanbul ignore if */
-                if(!ACCEPTED_FILETYPES.includes(ext)) {
+                if(!ext.match(ACCEPTED_FILETYPES)) {
                     throw new Error('ENOENT Unaccepted filetype')
                 }
 
@@ -92,6 +92,5 @@ module.exports = (app) => {
                 next(error)
             }
         }
-
     }))
 }
