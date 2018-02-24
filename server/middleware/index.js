@@ -92,5 +92,6 @@ module.exports = (app) => {
                 next(error)
             }
         }
+        next()
     }))
 }
